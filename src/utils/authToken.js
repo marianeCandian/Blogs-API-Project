@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userService = require('../service/user.service');
+// const userService = require('../service/user.service');
 
 const secret = process.env.JWT_SECRET;
 
@@ -8,15 +8,12 @@ const auth = async (req, res, next) => {
   if (!token) return res.status(401).json({ message: 'Token not found' });
 
   try {
-    const { data: { userId } } = jwt.verify(token, secret);
-    const user = await userService.getById(userId);
+    const { data } = jwt.verify(token, secret);
 
-    if (!user) return res.status(400).json({ message: 'Expired or invalid token' });
-
-    req.user = user;
+    req.user = data;
     return next();
   } catch (e) {
-    return res.status(401).json({ message: e.message });
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 

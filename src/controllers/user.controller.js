@@ -32,7 +32,15 @@ const create = async (req, res) => {
   return res.status(201).json({ token });
 };
 
+const getAllUsers = async (_req, res) => {
+  const allUsers = await userService.getAllUsers();
+  // console.log('>>>>>>>>>>');
+  // console.log(allUsers);
+  return res.status(200).json(allUsers);
+};
+
 module.exports = {
   login,
   create,
+  getAllUsers,
 };
