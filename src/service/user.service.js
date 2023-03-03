@@ -5,11 +5,6 @@ const login = async (email, password) => {
   return user;
 };
 
-const getById = async (userId) => {
-  const user = await User.findByPk(userId);
-  return user;
-};
-
 const getByEmail = async (email) => {
   const dbemail = await User.findOne({ where: { email } });
   
@@ -28,6 +23,15 @@ const create = async ({ displayName, email, password, image }) => {
 const getAllUsers = async () => {
   try {
     const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
+    return allUsers;
+  } catch (error) {
+    return { type: 'error', message: error.message };
+  }
+};
+
+const getById = async (id) => {
+  try {
+    const allUsers = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
     return allUsers;
   } catch (error) {
     return { type: 'error', message: error.message };

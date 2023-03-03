@@ -18,6 +18,7 @@ app.use(express.json());
 
 app.post('/login', validateLogin, userController.login);
 app.post('/user', validateName, validatePassword, validateEmail, userController.create);
+app.get('/user/:id', authToken, userController.getById);
 app.get('/user', authToken, userController.getAllUsers);
 // ...
 
