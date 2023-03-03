@@ -5,6 +5,29 @@ const login = async (email, password) => {
   return user;
 };
 
+const getById = async (userId) => {
+  const user = await User.findByPk(userId);
+  return user;
+};
+
+const getByEmail = async (email) => {
+  const dbemail = await User.findOne({ where: { email } });
+  
+  return dbemail;
+};
+
+const create = async ({ displayName, email, password, image }) => {
+  try {
+    const newUser = await User.create({ displayName, email, password, image });
+    return newUser;
+  } catch (e) {
+    return { type: 'error', message: e.message };
+  }
+};
+
 module.exports = {
   login,
+  getById,
+  create,
+  getByEmail,
 };

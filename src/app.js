@@ -2,7 +2,8 @@ const express = require('express');
 const validateLogin = require('./utils/validateLogin');
 // const authToken = require('./utils/authToken');
 const userController = require('./controllers/user.controller');
-
+const { validateEmail, validatePassword, validateName } = require('./utils/validateUser');
+ 
 // ...
 
 const app = express();
@@ -15,7 +16,7 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 
 app.post('/login', validateLogin, userController.login);
-
+app.post('/user', validateName, validatePassword, validateEmail, userController.create);
 // ...
 
 // É importante exportar a constante `app`,

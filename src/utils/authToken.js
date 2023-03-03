@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
     const { data: { userId } } = jwt.verify(token, secret);
     const user = await userService.getById(userId);
 
-    if (!user) return res.status(400).json({ message: 'Invalid fields' });
+    if (!user) return res.status(400).json({ message: 'Expired or invalid token' });
 
     req.user = user;
     return next();
