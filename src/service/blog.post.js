@@ -31,4 +31,26 @@ const findAll = async () => {
   }
 };
 
-module.exports = { createBlogPost, findNewPost, findAll };
+const findById = async (id) => {
+  try {
+    const post = await BlogPost.findByPk(id, {
+      include: [
+        { model: User, as: 'user', attributes: { exclude: 'password' } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    return post;
+  } catch (e) {
+    return { type: 'error', message: e.message };
+  }
+};
+
+const deletePost = async (id) => {
+  try {
+    await BlogPost.destroy({ where: { id } });
+  } catch (e) {
+    return { type: 'error', message: e.message };
+  }
+};
+
+module.exports = { createBlogPost, findNewPost, findAll, findById, deletePost };
