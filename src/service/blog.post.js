@@ -4,10 +4,12 @@ const createBlogPost = async (post) => {
   try {
     const { categoryIds } = post;
     const { dataValues } = await BlogPost.create(post);
+    console.log(dataValues);
   await Promise
     .all(categoryIds.map((categoryId) => PostCategory
       .create({ categoryId, postId: dataValues.id })));
   } catch (e) {
+    console.error(e);
     return { type: 'error', message: e.message };
   }
 };

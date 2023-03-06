@@ -1,10 +1,10 @@
 const blogPostService = require('../service/blog.post');
 
 const createBlogPost = async (req, res) => {
-  const { title, content, catogoryIds } = req.body;
+  const { title, content, categoryIds } = req.body;
   const { userId } = req.user;
 
-  const post = { title, content, catogoryIds, userId };
+  const post = { title, content, categoryIds, userId };
   
   await blogPostService.createBlogPost(post);
 
