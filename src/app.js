@@ -5,6 +5,8 @@ const { validateEmail, validatePassword, validateName } = require('./utils/valid
 const authToken = require('./utils/authToken');
 const validadeNameFromCategories = require('./utils/validateNameFromCategories');
 const categoryController = require('./controllers/category.controller');
+const { validatePosts, validadeCategories } = require('./utils/validatePosts');
+const blogPostController = require('./controllers/blogpost.controller');
  
 // ...
 
@@ -23,6 +25,8 @@ app.get('/user/:id', authToken, userController.getById);
 app.get('/user', authToken, userController.getAllUsers);
 app.post('/categories', authToken, validadeNameFromCategories, categoryController.createCategory);
 app.get('/categories', authToken, categoryController.getAllCategories);
+app.post('/post', authToken, validatePosts, validadeCategories, blogPostController.createBlogPost);
+app.get('/post', authToken, blogPostController.findAll);
 // ...
 
 // É importante exportar a constante `app`,

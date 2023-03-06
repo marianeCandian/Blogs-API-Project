@@ -14,9 +14,11 @@ const getAllCategories = async () => {
   try {
     const allUsers = await Category.findAll();
     return allUsers;
-  } catch (error) {
-    return { type: 'error', message: error.message };
+  } catch (e) {
+    return { type: 'error', message: e.message };
   }
 };
 
-module.exports = { createCategory, getAllCategories };
+const findAllById = async (id) => Category.findAll({ where: { id } });
+
+module.exports = { createCategory, getAllCategories, findAllById };

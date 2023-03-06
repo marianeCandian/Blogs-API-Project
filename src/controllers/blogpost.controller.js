@@ -1,0 +1,26 @@
+const blogPostService = require('../service/blog.post');
+
+const createBlogPost = async (req, res) => {
+  const { title, content, catogoryIds } = req.body;
+  const { userId } = req.user;
+
+  const post = { title, content, catogoryIds, userId };
+  
+  await blogPostService.createBlogPost(post);
+
+  const newBlogPost = await blogPostService.findNewPost({ title, content, userId });
+
+  if (newBlogPost.type) return res.status(500).json({ message: newBlogPost.message });
+
+  return res.status(201).json(newBlogPost);
+};
+
+const findAll = async (_req, res) => {
+  const posts = await blogPostService.findAll();
+
+  if (posts.type) return res.status(500).json({ message: posts.message });
+
+  return res.status(200).json(posts);
+};
+
+module.exports = { createBlogPost, findAll };
