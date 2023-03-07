@@ -46,9 +46,7 @@ const getById = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const { userId } = req.user;
-  const result = await userService.deleteUser(userId);
-
-  if (result.type) return res.status(400).json({ message: result.message });
+  await userService.deleteUser(userId);
 
   return res.status(204).end();
 };
