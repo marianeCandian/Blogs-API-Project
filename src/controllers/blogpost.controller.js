@@ -53,9 +53,7 @@ const updatePost = async (req, res) => {
 const searchPost = async (req, res) => {
   const { q = '' } = req.query;
 
-  const post = await blogPostService.searchPost(`%${q}%`);
-
-  // if (post.type) return res.status(404).json({ message: post.message });
+  const post = await blogPostService.searchPost(q);
 
   return res.status(200).json(post);
 };

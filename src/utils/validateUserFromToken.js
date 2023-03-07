@@ -12,7 +12,7 @@ const validateUser = async (req, res, next) => {
   const userLogin = await userService.getById(userId);
 
   if (post.user.email !== userLogin.email) {
-    res.status(401).json({ message: 'Unauthorized user' });
+    return res.status(401).json({ message: 'Unauthorized user' });
   }  
   
   return next();

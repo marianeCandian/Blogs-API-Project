@@ -40,7 +40,6 @@ const findById = async (id) => {
         { model: Category, as: 'categories', through: { attributes: [] } },
       ],
     });
-    console.log(post);
     return post;
   } catch (e) {
     return { type: 'error', message: e.message };
@@ -68,7 +67,7 @@ const searchPost = async (q) => {
     const post = await BlogPost.findAll({
       where: {
         [Op.or]:
-        [{ title: { [Op.like]: q } }, { content: { [Op.like]: q } }],
+        [{ title: { [Op.like]: `%${q}%` } }, { content: { [Op.like]: `%${q}%` } }],
       },
       include: [
         { model: User, as: 'user', attributes: { exclude: 'password' } },
