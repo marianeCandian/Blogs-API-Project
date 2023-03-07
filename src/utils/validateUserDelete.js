@@ -3,8 +3,6 @@ const blogPostService = require('../service/blog.post');
 const validateUserDelete = async (req, res, next) => {
   const { id } = req.params;
   const { userId } = req.user;
-  console.log('>>>>>>>>>>');
-  console.log(userId);
 
   const post = await blogPostService.findById(id);
 

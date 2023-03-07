@@ -39,6 +39,7 @@ const findById = async (id) => {
         { model: Category, as: 'categories', through: { attributes: [] } },
       ],
     });
+    console.log(post);
     return post;
   } catch (e) {
     return { type: 'error', message: e.message };

@@ -29,6 +29,7 @@ app.get('/categories', authToken, categoryController.getAllCategories);
 app.post('/post', authToken, validatePosts, validadeCategories, blogPostController.createBlogPost);
 app.get('/post', authToken, blogPostController.findAll);
 app.delete('/post/:id', authToken, validateUserDelete, blogPostController.deletePost);
+app.get('/post/:id', authToken, blogPostController.getPostById);
 // ...
 
 // É importante exportar a constante `app`,
