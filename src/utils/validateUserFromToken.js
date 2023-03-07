@@ -1,6 +1,7 @@
 const blogPostService = require('../service/blog.post');
+const userService = require('../service/user.service');
 
-const validateUserDelete = async (req, res, next) => {
+const validateUser = async (req, res, next) => {
   const { id } = req.params;
   const { userId } = req.user;
 
@@ -8,11 +9,13 @@ const validateUserDelete = async (req, res, next) => {
 
   if (!post) return res.status(404).json({ message: 'Post does not exist' });
 
-  if (post.user.id !== userId) {
+  const user = await userService.getById(userId);
+
+  if (post.user.email !== user.email) {
     res.status(401).json({ message: 'Unauthorized user' });
   }  
   
   return next();
 };
 
-module.exports = validateUserDelete;
+module.exports = validateUser;

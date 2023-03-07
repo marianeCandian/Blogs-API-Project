@@ -39,7 +39,6 @@ const findById = async (id) => {
         { model: Category, as: 'categories', through: { attributes: [] } },
       ],
     });
-    console.log(post);
     return post;
   } catch (e) {
     return { type: 'error', message: e.message };
@@ -54,4 +53,12 @@ const deletePost = async (id) => {
   }
 };
 
-module.exports = { createBlogPost, findNewPost, findAll, findById, deletePost };
+const updatePost = async ({ title, content, id }) => {
+  try {
+    await BlogPost.update({ title, content }, { where: { id } });
+  } catch (e) {
+    return { type: 'error', message: e.message };
+  }
+};
+
+module.exports = { createBlogPost, findNewPost, findAll, findById, deletePost, updatePost };
