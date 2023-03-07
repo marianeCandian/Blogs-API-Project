@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, User, Category } = require('../models');
 
 const createBlogPost = async (post) => {
@@ -62,4 +63,29 @@ const updatePost = async ({ title, content, id }) => {
   }
 };
 
-module.exports = { createBlogPost, findNewPost, findAll, findById, deletePost, updatePost };
+const searchPost = async (q) => {
+  try {
+    const post = await BlogPost.findAll({
+      where: {
+        [Op.or]:
+        [{ title: { [Op.like]: q } }, { content: { [Op.like]: q } }],
+      },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: 'password' } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    return post;
+  } catch (e) {
+    return { type: 'error', message: e.message };
+  }
+};
+
+module.exports = { createBlogPost,
+  findNewPost,
+  findAll,
+  findById,
+  deletePost,
+  updatePost,
+  searchPost,
+};

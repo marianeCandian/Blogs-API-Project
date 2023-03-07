@@ -50,4 +50,14 @@ const updatePost = async (req, res) => {
   return res.status(200).json(result);
 };
 
-module.exports = { createBlogPost, findAll, deletePost, getPostById, updatePost };
+const searchPost = async (req, res) => {
+  const { q = '' } = req.query;
+
+  const post = await blogPostService.searchPost(`%${q}%`);
+
+  // if (post.type) return res.status(404).json({ message: post.message });
+
+  return res.status(200).json(post);
+};
+
+module.exports = { createBlogPost, findAll, deletePost, getPostById, updatePost, searchPost };
