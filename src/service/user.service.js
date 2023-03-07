@@ -24,8 +24,8 @@ const getAllUsers = async () => {
   try {
     const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
     return allUsers;
-  } catch (error) {
-    return { type: 'error', message: error.message };
+  } catch (e) {
+    return { type: 'error', message: e.message };
   }
 };
 
@@ -38,10 +38,19 @@ const getById = async (id) => {
   }
 };
 
+const deleteUser = async (userId) => {
+  try {
+    await User.destroy({ where: { id: userId } });
+  } catch (e) {
+    return { type: 'error', message: e.message };
+  }
+};
+
 module.exports = {
   login,
   getById,
   create,
   getByEmail,
   getAllUsers,
+  deleteUser,
 };

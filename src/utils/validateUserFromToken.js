@@ -9,9 +9,9 @@ const validateUser = async (req, res, next) => {
 
   if (!post) return res.status(404).json({ message: 'Post does not exist' });
 
-  const user = await userService.getById(userId);
+  const userLogin = await userService.getById(userId);
 
-  if (post.user.email !== user.email) {
+  if (post.user.email !== userLogin.email) {
     res.status(401).json({ message: 'Unauthorized user' });
   }  
   
